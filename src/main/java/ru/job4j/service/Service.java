@@ -4,13 +4,13 @@ import ru.job4j.domain.Person;
 
 import java.util.Optional;
 
-public interface Service {
+public interface Service<T> {
 
-    Iterable<Person> findAll();
+    Iterable<T> findAll();
 
-    Optional<Person> findById(int id);
+    Optional<T> findById(int id);
 
-    Person save(Person person);
+    T save(T t);
 
-    void deletePerson(Person person);
+    void deletePerson(T t);
 }

@@ -1,13 +1,12 @@
 package ru.job4j.service;
 
-
 import ru.job4j.domain.Person;
 import ru.job4j.repository.PersonRepository;
 
 import java.util.Optional;
 
 @org.springframework.stereotype.Service
-public class PersonService implements Service {
+public class PersonService implements Service<Person> {
     private final PersonRepository repository;
 
     public PersonService(PersonRepository repository) {

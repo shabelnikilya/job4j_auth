@@ -8,13 +8,14 @@ import ru.job4j.service.PersonService;
 import ru.job4j.service.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
 @RestController
 @RequestMapping("/person")
 public class PersonController {
-    private final Service service;
+    private final Service<Person> service;
 
     public PersonController(final PersonService service) {
         this.service = service;
@@ -22,14 +23,14 @@ public class PersonController {
 
     @GetMapping("/")
     public List<Person> findAll() {
-        return StreamSupport.stream(
-                this.service.findAll().spliterator(), false
+        return StreamSupport.stream(this.service.findAll()
+                .spliterator(), false
         ).collect(Collectors.toList());
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<Person> findById(@PathVariable int id) {
-        var person = this.service.findById(id);
+        Optional<Person> person = this.service.findById(id);
         return new ResponseEntity<>(
                 person.orElse(new Person()),
                 person.isPresent() ? HttpStatus.OK : HttpStatus.NOT_FOUND
